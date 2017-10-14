@@ -1,7 +1,7 @@
 # simplesql
 
 `simplesql` offers a simplified SQL syntax that hides the complexity of joins on foreign keys. It compiles to valid
-SQL.
+PostgreSQL (MySQL later).
 
 ## Example Query
 
