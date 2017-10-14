@@ -73,7 +73,6 @@ class SimpleSQL(object):
         number = Word(nums)
         string = (QuotedString(quoteChar="'") | QuotedString(quoteChar='"')).setParseAction(lambda x: '"' + x[0] + '"')
         where_val = number | string
-
         lpar = Literal('(')
         rpar = Literal(')')
         tables = Group(Word(alphas) + ZeroOrMore(Suppress(Literal('->')) + Word(alphas)))
