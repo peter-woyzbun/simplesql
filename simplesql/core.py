@@ -14,6 +14,22 @@ from pyparsing import (Literal,
                        delimitedList)
 
 
+class Grammar(object):
+
+    @property
+    def where_clause(self):
+        where_op = oneOf('> >= < <= = IN !=') | Literal("NOT IN")
+        number = Word(nums)
+        string = (QuotedString(quoteChar="'") | QuotedString(quoteChar='"')).setParseAction(lambda x: '"' + x[0] + '"')
+        where_val = number | string
+        lpar = Literal('(')
+        rpar = Literal(')')
+        tables = Group(Word(alphas) + ZeroOrMore(Suppress(Literal('>>>')) + Word(alphas)))
+        tbl_col = tables + Suppress(Literal('.')) + Word(alphas)
+        where_clause = tbl_col + where_op + where_val
+        return where_clause
+
+
 class SimpleSQL(object):
 
     def __init__(self, query):
@@ -91,5 +107,5 @@ class SimpleSQL(object):
 
 
 # simple_sql = SimpleSQL('((part.number = "abc") & (part..supplier.name = "Panasonic")) | (part.number = "xyz")')
-simple_sql = SimpleSQL('(part.status = "ACTIVE") & (part>>>supplier.name = "Acme") & (part>>>warehouse>>>location.id = "BM10-00400")')
+simple_sql = SimpleSQL('(part.status = "ACTIVE") & (part>>>supplier.name = "Acme") & (part>>>warehouse>>>location.id = "BM10-00400") | (part.this = "today")')
 sql = simple_sql.compiled_sql()

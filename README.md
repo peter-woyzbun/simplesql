@@ -5,12 +5,13 @@ PostgreSQL (MySQL later).
 
 ## Example Query
 
+This SimpleSQL query:
 ```
 (part.status = "ACTIVE") & (part >>> supplier.name = "Acme") 
 & (part >>> warehouse >>> location.id = "BM10-00400")
 ```
 
-### Compiled SQL
+compiles to this:
 
 ```SQL
 (( 
