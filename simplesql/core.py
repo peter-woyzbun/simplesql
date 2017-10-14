@@ -69,7 +69,7 @@ class SimpleSQL(object):
         return clause
 
     def compiled_sql(self):
-        where_op = oneOf('> >= < <= = IN') | Literal("NOT IN")
+        where_op = oneOf('> >= < <= = IN !=') | Literal("NOT IN")
         number = Word(nums)
         string = (QuotedString(quoteChar="'") | QuotedString(quoteChar='"')).setParseAction(lambda x: '"' + x[0] + '"')
         where_val = number | string
