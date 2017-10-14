@@ -76,7 +76,7 @@ class SimpleSQL(object):
 
         lpar = Literal('(')
         rpar = Literal(')')
-        tables = Group(Word(alphas) + ZeroOrMore(Suppress(Literal('..')) + Word(alphas)))
+        tables = Group(Word(alphas) + ZeroOrMore(Suppress(Literal('->')) + Word(alphas)))
         tbl_col = tables + Suppress(Literal('.')) + Word(alphas)
         where_clause = tbl_col + where_op + where_val
         where_clause.setParseAction(lambda x: self._make_atomic(tables=x[0], col_name=x[1], op=x[2], value=x[3]))
@@ -92,5 +92,5 @@ class SimpleSQL(object):
 
 
 # simple_sql = SimpleSQL('((part.number = "abc") & (part..supplier.name = "Panasonic")) | (part.number = "xyz")')
-simple_sql = SimpleSQL('(part.status = "ACTIVE") & (part..supplier.name = "Acme") & (part..warehouse..location.id = "BM10-00400")')
+simple_sql = SimpleSQL('(part.status = "ACTIVE") & (part->supplier.name = "Acme") & (part->warehouse->location.id = "BM10-00400")')
 sql = simple_sql.compiled_sql()

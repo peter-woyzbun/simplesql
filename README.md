@@ -6,7 +6,7 @@ SQL.
 ## Example Query
 
 ```
-(part.status = "ACTIVE") & (part..supplier.name = "Acme") & (part..warehouse..location.id = "BM10-00400")
+(part.status = "ACTIVE") & (part->supplier.name = "Acme") & (part->warehouse->location.id = "BM10-00400")
 ```
 
 ### Compiled SQL
