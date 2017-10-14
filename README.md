@@ -36,5 +36,5 @@ SQL.
                     WHERE id = "BM10-00400"
                         ) q2 ON q2.id = q3.location_id
                         ) q4 ON q4.id = q5.warehouse_id
- ) )
+))
 ```
