@@ -17,7 +17,6 @@ SQL.
     FROM part
     WHERE status = "ACTIVE"
  )) INTERSECT (( 
-
     SELECT *
     FROM part q1
     RIGHT JOIN (
@@ -25,7 +24,6 @@ SQL.
         FROM supplier
         WHERE name = "Acme"
         ) q0 ON q0.id = q1.supplier_id
-
 )) INTERSECT (( 
             SELECT *
             FROM part q5
