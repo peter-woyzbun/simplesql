@@ -6,7 +6,8 @@ PostgreSQL (MySQL to come, using `WHERE EXISTS (...) OR EXISTS (...) AND EXISTS(
 
 ## Example Query
 
-This `simplesql` query:
+This `simplesql` query, where there are tables `part` (with foreign key to:), `supplier` (with foreign key to:), and
+ `warehouse`:
 ```
 (part.status = "ACTIVE") & (part >>> supplier.name = "Acme") 
 & (part >>> warehouse >>> location.id = "BM10-00400")
