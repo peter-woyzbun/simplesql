@@ -46,8 +46,7 @@ class TableNode(object):
     def create_path(self, path: List[str]):
         table_node = self
         for child_tbl in path:
-            table_node.add_child(tbl_name=child_tbl)
-            table_node = table_node[child_tbl]
+            table_node = table_node.get_or_create_table_node(tbl_name=child_tbl)
 
     def terminal_query(self):
         query = """

@@ -12,30 +12,6 @@ keys:
 (part.status = "ACTIVE") & (part >>> supplier.name = "Acme") 
 & (part >>> warehouse >>> location.id = "BM10-00400")
 
-GET part >> status, 
-            supplier.name AS supplier_name,
-            warehouse.location.name AS location_name
-WHERE (part.status = "ACTIVE") & 
-      (part.supplier.name = "Acme") & 
-      (part.warehouse.location.id = "BM10-00400")
-
-SELECT *
-FROM part
-WHERE 
-    EXISTS (
-    SELECT *
-    FROM part s
-    WHERE s.id = part.id AND s.status = "ACTIVE"
-    ) AND 
-    EXISTS (
-    SELECT *
-    FROM part
-    RIGHT JOIN (
-        
-    
-    )
-    )
-
 ```
 
 compiles to this:
@@ -66,4 +42,16 @@ compiles to this:
                         ) q2 ON q2.id = q3.location_id
                         ) q4 ON q4.id = q5.warehouse_id
 ))
+```
+
+## Future
+
+```
+GET part >> status, 
+            supplier.name AS supplier_name,
+            warehouse.location.name AS location_name
+WHERE (part.status = "ACTIVE") & 
+      (part.supplier.name = "Acme") & 
+      (part.warehouse.location.id = "BM10-00400")
+
 ```

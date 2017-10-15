@@ -2,6 +2,8 @@ import itertools
 
 import pyparsing as pp
 
+from .select_tree import TableNode
+
 
 class Grammar(object):
 
@@ -72,6 +74,7 @@ class Compiler(Grammar):
         self.input_query = simple_sql_query
         self.output_query = ""
         self.where_clauses = list()
+        self.select_tree = TableNode(tbl_name='')
         self.sub_query_count = itertools.count()
 
     @property
