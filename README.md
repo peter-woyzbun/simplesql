@@ -1,6 +1,6 @@
 # simplesql
 
-`simplesql` offers a simplified SQL syntax that hides the complexity of joins on foreign keys. It compiles to valid
+`simplesql` offers a simplified (subset of) SQL syntax that hides the complexity of joins on foreign keys. It compiles to valid
 PostgreSQL (MySQL to come, using `WHERE EXISTS (...) OR EXISTS (...) AND EXISTS(...)` clauses rather than 
 `UNION`/`INTERSECT`).
 
