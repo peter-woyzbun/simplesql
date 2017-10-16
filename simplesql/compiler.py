@@ -5,6 +5,47 @@ import pyparsing as pp
 from .select_tree import TableNode
 
 
+class GrammarBase(object):
+
+    @property
+    def name(self):
+        name = pp.Word(pp.alphas, pp.alphanums + '_')
+        return name
+
+    @property
+    def opt_ws(self):
+        opt_ws = pp.Optional(pp.White())
+        return opt_ws
+
+    @property
+    def tbl_col_pointer(self):
+        tbl_col_pointer = pp.Group(
+            self.name + pp.Suppress(".") + self.name + pp.ZeroOrMore(pp.Suppress(".") + self.name))
+        return tbl_col_pointer
+
+
+class GetGrammar(GrammarBase):
+
+    @property
+    def get_table(self):
+        get = pp.Suppress('GET')
+        base_table = self.name
+        get_table = get + base_table
+        return get_table
+
+    @property
+    def get_columns(self):
+        prefix = pp.Suppress('>>')
+        listed_pointer = self.opt_ws + pp.Literal(",") + self.opt_ws + self.tbl_col_pointer
+        get_columns = prefix + pp.Group(self.tbl_col_pointer + pp.ZeroOrMore(listed_pointer))
+        return get_columns
+
+    @property
+    def get_block(self):
+        get_block = self.get_table + self.get_columns
+        return get_block
+
+
 class Grammar(object):
 
     @property

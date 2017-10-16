@@ -19,10 +19,13 @@ class TableTree(object):
             return nx.ancestors(self._graph, tbl_name)[0]
         else:
             return None
-        
+
     def parent_sub_query_index(self, for_table):
         parent_name = self.table_parent(tbl_name=for_table)
-        return self._graph.node[parent_name]['sub_query_index']
+        if parent_name:
+            return self._graph.node[parent_name]['sub_query_index']
+        else:
+            return None
 
     @property
     def ordered_table_names(self):
