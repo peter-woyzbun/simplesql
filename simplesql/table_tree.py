@@ -1,3 +1,5 @@
+import itertools
+
 import networkx as nx
 
 
@@ -6,6 +8,21 @@ class TableTree(object):
     def __init__(self):
         self._graph = nx.DiGraph()
         self.root_tbl_name = None
+        self.sub_query_count = itertools.count()
+
+    @property
+    def sub_query_index(self):
+        return next(self.sub_query_count)
+
+    def table_parent(self, tbl_name):
+        if nx.ancestors(self._graph, tbl_name):
+            return nx.ancestors(self._graph, tbl_name)[0]
+        else:
+            return None
+        
+    def parent_sub_query_index(self, for_table):
+        parent_name = self.table_parent(tbl_name=for_table)
+        return self._graph.node[parent_name]['sub_query_index']
 
     @property
     def ordered_table_names(self):
@@ -26,6 +43,7 @@ class TableTree(object):
         if not self._graph.has_node(tbl_name):
             self._graph.add_node(tbl_name)
             self._graph.node[tbl_name]['columns'] = list()
+            self._graph.node[tbl_name]['sub_query_index'] = self.sub_query_index
         if parent_tbl_name:
             self._graph.add_edge(parent_tbl_name, tbl_name)
 
