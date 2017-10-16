@@ -44,17 +44,7 @@ class GetGrammar(GrammarBase):
         return get_block
 
 
-class Grammar(object):
-
-    @property
-    def name(self):
-        name = pp.Word(pp.alphas, pp.alphanums + '_')
-        return name
-
-    @property
-    def opt_ws(self):
-        opt_ws = pp.Optional(pp.White())
-        return opt_ws
+class WhereGrammar(GrammarBase):
 
     @property
     def primative(self):
@@ -87,11 +77,6 @@ class Grammar(object):
         return where_clause
 
     @property
-    def tbl_col_pointer(self):
-        tbl_col_pointer = pp.Group(self.name + pp.Suppress(".") + self.name + pp.ZeroOrMore(pp.Suppress(".") + self.name))
-        return tbl_col_pointer
-
-    @property
     def get_clause(self):
         get_clause = pp.Suppress("GET") + self.name
         return get_clause
@@ -107,7 +92,7 @@ class Grammar(object):
         return intersect
 
 
-class Compiler(Grammar):
+class Compiler(GetGrammar, WhereGrammar):
 
     def __init__(self, simple_sql_query):
         self.input_query = simple_sql_query
