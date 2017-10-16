@@ -9,7 +9,8 @@ PostgreSQL (MySQL to come, using `WHERE EXISTS (...) OR EXISTS (...) AND EXISTS(
 This `simplesql` query, where there are tables `part`, `supplier`, `warehouse`, and `location`, all linked by foreign 
 keys:
 ```
-(part.status = "ACTIVE") & (part.supplier.name = "Acme") & (part.warehouse.location.id = "BM10-00400")
+GET part
+WHERE (part.status = "ACTIVE") & (part.supplier.name = "Acme") & (part.warehouse.location.id = "BM10-00400")
 
 ```
 
