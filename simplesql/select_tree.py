@@ -7,8 +7,8 @@ class TableColumnSets(object):
     def __init__(self):
         self.table_cols = defaultdict(list)
 
-    def add_col(self, tbl_name):
-        self.table_cols[tbl_name].append(tbl_name)
+    def add_col(self, tbl_name, col_name):
+        self.table_cols[tbl_name].append(col_name)
 
     def select_cols(self, for_table):
         return ", ".join(self.table_cols[for_table])
@@ -24,7 +24,7 @@ class TableNode(object):
 
     @property
     def is_terminal(self):
-        return bool(self.children)
+        return len(self.children.keys()) == 0
 
     def __getitem__(self, item):
         return self.children[item]
@@ -60,7 +60,7 @@ class TableNode(object):
         for child_tbl in self.children.keys():
             query += """
             JOIN ({child_query}) {child_tbl} ON {tbl_name}.{child_tbl}_id = {child_tbl}.id
-            """.format(child_query=self.children[child_tbl].query(), child_tbl=child_tbl)
+            """.format(child_query=self.children[child_tbl].query(), child_tbl=child_tbl, tbl_name=self.tbl_name)
         return query
 
     def query(self):
@@ -70,7 +70,14 @@ class TableNode(object):
             return self.nested_query()
 
 
-
+node = TableNode(tbl_name='part')
+node.add_child(tbl_name='supplier')
+node['supplier'].add_child(tbl_name='location')
+node.table_column_sets.add_col(tbl_name='part', col_name='name')
+node.table_column_sets.add_col(tbl_name='part', col_name='id')
+node.table_column_sets.add_col(tbl_name='supplier', col_name='thing')
+node.table_column_sets.add_col(tbl_name='location', col_name='name')
+print(node.query())
 
 
 
