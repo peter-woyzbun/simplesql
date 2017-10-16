@@ -18,7 +18,8 @@ class GrammarBase(object):
     @property
     def tbl_col_pointer(self):
         tbl_col_pointer = pp.Group(
-            self.name + pp.Suppress(".") + self.name + pp.ZeroOrMore(pp.Suppress(".") + self.name))
+            self.name + pp.Suppress(".") + self.name + pp.ZeroOrMore(pp.Suppress(".") + self.name)
+        )
         return tbl_col_pointer
 
 

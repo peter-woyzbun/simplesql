@@ -53,8 +53,8 @@ compiles to this:
 GET part >> status, 
             supplier.name AS supplier_name,
             warehouse.location.name AS location_name
-WHERE (part.status = "ACTIVE") & 
-      (part.supplier.name = "Acme") & 
-      (part.warehouse.location.id = "BM10-00400")
+WHERE (status = "ACTIVE") & 
+      (supplier.name = "Acme") & 
+      (warehouse.location.id = "BM10-00400")
 
 ```
