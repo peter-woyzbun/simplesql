@@ -10,7 +10,10 @@ This `simplesql` query, where there are tables `part`, `supplier`, `warehouse`, 
 keys:
 ```
 GET part
-WHERE (part.status = "ACTIVE") & (part.supplier.name = "Acme") & (part.warehouse.location.id = "BM10-00400")
+WHERE 
+    (part.status = "ACTIVE") & 
+    (part.supplier.name = "Acme") & 
+    (part.warehouse.location.id = "BM10-00400")
 
 ```
 
